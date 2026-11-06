@@ -1,0 +1,247 @@
+package com.example.tallyintegration.xmlconstants;
+
+public class TallyXmlConstants {
+
+    public static final String TALLY_LEDGER_CREATION  =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<ENVELOPE>\n" +
+                    "  <HEADER>\n" +
+                    "    <TALLYREQUEST>Import Data</TALLYREQUEST>\n" +
+                    "  </HEADER>\n" +
+                    "  <BODY>\n" +
+                    "    <IMPORTDATA>\n" +
+                    "      <REQUESTDESC>\n" +
+                    "        <REPORTNAME>All Masters</REPORTNAME>\n" +
+                    "        <STATICVARIABLES>\n" +
+                    "          <SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>\n" +
+                    "        </STATICVARIABLES>\n" +
+                    "      </REQUESTDESC>\n" +
+                    "      <REQUESTDATA>\n" +
+                    "        <TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
+                    "          <LEDGER NAME=\"{ledgerName}\" ACTION=\"Create\">\n" +
+                    "            <NAME>{ledgerName}</NAME>\n" +
+                    "            <PARENT>{ledgerParent}</PARENT>\n" +
+                    "            <ISBILLWISEON>Yes</ISBILLWISEON>\n" +
+                    "            <BILLCREDITPERIOD>{creditPeriod}</BILLCREDITPERIOD>\n" +
+                    "            <OPENINGBALANCE>{openingBalance}</OPENINGBALANCE>\n" +
+                    "            <PRIORSTATENAME>{ledgerStateName}</PRIORSTATENAME>\n" +
+                    "            <COUNTRYOFRESIDENCE>{country}</COUNTRYOFRESIDENCE>\n" +
+                    "            <LEDGSTREGDETAILS.LIST>\n" +
+                    "              <APPLICABLEFROM>{applicableFrom}</APPLICABLEFROM>\n" +
+                    "              <GSTREGISTRATIONTYPE>{gstRegistrationType}</GSTREGISTRATIONTYPE>\n" +
+                    "              <PLACEOFSUPPLY>{state}</PLACEOFSUPPLY>\n" +
+                    "              <GSTIN>{gstin}</GSTIN>\n"  +
+                    "              <ISOTHTERRITORYASSESSEE>No</ISOTHTERRITORYASSESSEE>\n" +
+                    "              <CONSIDERPURCHASEFOREXPORT>No</CONSIDERPURCHASEFOREXPORT>\n" +
+                    "              <ISTRANSPORTER>No</ISTRANSPORTER>\n" +
+                    "              <ISCOMMONPARTY>No</ISCOMMONPARTY>\n" +
+                    "            </LEDGSTREGDETAILS.LIST>\n" +
+                    "            <LEDMAILINGDETAILS.LIST>\n" +
+                    "              <ADDRESS.LIST TYPE=\"String\">\n" +
+                    "                <ADDRESS>{address1}</ADDRESS>\n" +
+                    "               <ADDRESS>{address2}</ADDRESS>\n" +
+                    "                <ADDRESS>{address3}</ADDRESS>\n" +
+                    "                <ADDRESS>{address4}</ADDRESS>\n"  +
+                    "              </ADDRESS.LIST>\n" +
+                    "              <APPLICABLEFROM>{applicableFrom}</APPLICABLEFROM>\n" +
+                    "              <PINCODE>{pincode}</PINCODE>\n" +
+                    "              <MAILINGNAME>{ledgerName}</MAILINGNAME>\n" +
+                    "              <STATE>{ledgerStateName}</STATE>\n" +
+                    "              <COUNTRY>{country}</COUNTRY>\n" +
+                    "            </LEDMAILINGDETAILS.LIST>\n" +
+                    "            <LEDGERPHONE>{phoneNumber}</LEDGERPHONE>\n" +
+                    "            <LEDGERMOBILE>{phoneNumber}</LEDGERMOBILE>\n" +
+                    "            <EMAIL>{email}</EMAIL>\n" +
+                    "            <INCOMETAXNUMBER>{panNumber}</INCOMETAXNUMBER>\n" +
+                    "            <GSTREGISTRATIONTYPE>{gstRegistrationType}</GSTREGISTRATIONTYPE>\n" +
+                    "            <PARTYGSTIN>{gstin}</PARTYGSTIN>\n" +
+                    "          </LEDGER>\n" +
+                    "        </TALLYMESSAGE>\n" +
+                    "      </REQUESTDATA>\n" +
+                    "    </IMPORTDATA>\n" +
+                    "  </BODY>\n" +
+                    "</ENVELOPE>";
+
+
+
+    public static final String TALLY_SALES_INVOICE =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<ENVELOPE>\n" +
+                    "  <HEADER>\n" +
+                    "    <TALLYREQUEST>Import Data</TALLYREQUEST>\n" +
+                    "  </HEADER>\n" +
+                    "  <BODY>\n" +
+                    "    <IMPORTDATA>\n" +
+                    "      <REQUESTDESC>\n" +
+                    "        <REPORTNAME>Vouchers</REPORTNAME>\n" +
+                    "        <STATICVARIABLES>\n" +
+                    "          <SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>\n" +
+                    "        </STATICVARIABLES>\n" +
+                    "      </REQUESTDESC>\n" +
+                    "      <REQUESTDATA>\n" +
+                    "        <TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
+                    "          <VOUCHER VCHTYPE=\"Sales\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">\n" +
+                    "            <DATE>{invoiceDate}</DATE>\n" +
+                    "            <EFFECTIVEDATE>{invoiceDate}</EFFECTIVEDATE>\n" +
+                    "            <VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>\n" +
+                    "            <VOUCHERNUMBER>{invoiceNumber}</VOUCHERNUMBER>\n" +
+                    "            <PARTYLEDGERNAME>{customerLedger}</PARTYLEDGERNAME>\n" +
+                    "            <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>\n" +
+                    "            <VCHENTRYMODE>Item Invoice</VCHENTRYMODE>\n" +
+                    "            <ISINVOICE>Yes</ISINVOICE>\n" +
+                    "            {inventoryEntries}\n" +
+                    "            {taxEntries}\n" +
+                    "            <LEDGERENTRIES.LIST>\n" +
+                    "              <LEDGERNAME>{customerLedger}</LEDGERNAME>\n" +
+                    "              <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n" +
+                    "              <ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n" +
+                    "              <AMOUNT>-{totalAmount}</AMOUNT>\n" +
+                    "              <BILLALLOCATIONS.LIST>\n" +
+                    "                <NAME>{invoiceNumber}</NAME>\n" +
+                    "                <BILLTYPE>New Ref</BILLTYPE>\n" +
+                    "                <AMOUNT>-{totalAmount}</AMOUNT>\n" +
+                    "              </BILLALLOCATIONS.LIST>\n" +
+                    "            </LEDGERENTRIES.LIST>\n" +
+                    "          </VOUCHER>\n" +
+                    "        </TALLYMESSAGE>\n" +
+                    "      </REQUESTDATA>\n" +
+                    "    </IMPORTDATA>\n" +
+                    "  </BODY>\n" +
+                    "</ENVELOPE>";
+
+
+
+    public static final String TALLY_PURCHASE_INVOICE =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<ENVELOPE>\n" +
+                    "  <HEADER>\n" +
+                    "    <TALLYREQUEST>Import Data</TALLYREQUEST>\n" +
+                    "  </HEADER>\n" +
+                    "  <BODY>\n" +
+                    "    <IMPORTDATA>\n" +
+                    "      <REQUESTDESC>\n" +
+                    "        <REPORTNAME>Vouchers</REPORTNAME>\n" +
+                    "        <STATICVARIABLES>\n" +
+                    "          <SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>\n" +
+                    "        </STATICVARIABLES>\n" +
+                    "      </REQUESTDESC>\n" +
+                    "      <REQUESTDATA>\n" +
+                    "        <TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
+                    "          <VOUCHER VCHTYPE=\"Purchase\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">\n" +
+                    "            <DATE>{invoiceDate}</DATE>\n" +
+                    "            <EFFECTIVEDATE>{invoiceDate}</EFFECTIVEDATE>\n" +
+                    "            <VOUCHERTYPENAME>Purchase</VOUCHERTYPENAME>\n" +
+                    "            <VOUCHERNUMBER>{invoiceNumber}</VOUCHERNUMBER>\n" +
+                    "            <PARTYLEDGERNAME>{supplierLedger}</PARTYLEDGERNAME>\n" +
+                    "            <STATENAME>{companyState}</STATENAME>\n" +
+                    "            <PLACEOFSUPPLY>{placeOfSupply}</PLACEOFSUPPLY>\n" +
+                    "            <CMPGSTSTATE>{companyState}</CMPGSTSTATE>\n" +
+                    "            <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>\n" +
+                    "            <VCHENTRYMODE>Item Invoice</VCHENTRYMODE>\n" +
+                    "            <ISINVOICE>Yes</ISINVOICE>\n" +
+                    "            {inventoryEntries}\n" +
+                    "            {taxEntries}\n" +
+                    "            <LEDGERENTRIES.LIST>\n" +
+                    "              <LEDGERNAME>{supplierLedger}</LEDGERNAME>\n" +
+                    "              <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n" +
+                    "              <ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n" +
+                    "              <AMOUNT>{totalAmount}</AMOUNT>\n" +
+                    "              <BILLALLOCATIONS.LIST>\n" +
+                    "                <NAME>{invoiceNumber}</NAME>\n" +
+                    "                <BILLTYPE>New Ref</BILLTYPE>\n" +
+                    "                <AMOUNT>{totalAmount}</AMOUNT>\n" +
+                    "              </BILLALLOCATIONS.LIST>\n" +
+                    "            </LEDGERENTRIES.LIST>\n" +
+                    "          </VOUCHER>\n" +
+                    "        </TALLYMESSAGE>\n" +
+                    "      </REQUESTDATA>\n" +
+                    "    </IMPORTDATA>\n" +
+                    "  </BODY>\n" +
+                    "</ENVELOPE>";
+
+
+
+//    public static final String TALLY_GRN =
+//            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+//                    "<ENVELOPE>\n" +
+//                    "  <HEADER>\n" +
+//                    "    <TALLYREQUEST>Import Data</TALLYREQUEST>\n" +
+//                    "  </HEADER>\n" +
+//                    "  <BODY>\n" +
+//                    "    <IMPORTDATA>\n" +
+//                    "      <REQUESTDESC>\n" +
+//                    "        <REPORTNAME>Vouchers</REPORTNAME>\n" +
+//                    "        <STATICVARIABLES>\n" +
+//                    "          <SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>\n" +
+//                    "        </STATICVARIABLES>\n" +
+//                    "      </REQUESTDESC>\n" +
+//                    "      <REQUESTDATA>\n" +
+//                    "        <TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
+//                    "          <VOUCHER VCHTYPE=\"Receipt Note\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">\n" +
+//                    "            <DATE>{grnDate}</DATE>\n" +
+//                    "            <VCHSTATUSDATE>{grnDate}</VCHSTATUSDATE>\n" +
+//                    "            <EFFECTIVEDATE>{grnDate}</EFFECTIVEDATE>\n" +
+//                    "            <VOUCHERTYPENAME>Receipt Note</VOUCHERTYPENAME>\n" +
+//                    "            <VOUCHERNUMBER>{grnNumber}</VOUCHERNUMBER>\n" +
+//                    "            <REFERENCE>{purchaseOrderNumber}</REFERENCE>\n" +
+//                    "            <PARTYNAME>{supplierLedgerName}</PARTYNAME>\n" +
+//                    "            <PARTYLEDGERNAME>{supplierLedgerName}</PARTYLEDGERNAME>\n" +
+//                    "            <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>\n" +
+//                    "            <ISINVOICE>No</ISINVOICE>\n" +
+//                    "            {inventoryEntries}\n" +
+//                    "            <NARRATION>{narration}</NARRATION>\n" +
+//                    "          </VOUCHER>\n" +
+//                    "        </TALLYMESSAGE>\n" +
+//                    "      </REQUESTDATA>\n" +
+//                    "    </IMPORTDATA>\n" +
+//                    "  </BODY>\n" +
+//                    "</ENVELOPE>";
+
+
+    public static final String TALLY_GRN =
+            "<ENVELOPE>" +
+                    "<HEADER>" +
+                    "<TALLYREQUEST>Import Data</TALLYREQUEST>" +
+                    "</HEADER>" +
+                    "<BODY>" +
+                    "<IMPORTDATA>" +
+                    "<REQUESTDESC>" +
+                    "<REPORTNAME>Vouchers</REPORTNAME>" +
+                    "<STATICVARIABLES>" +
+                    "<SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>" +
+                    "</STATICVARIABLES>" +
+                    "</REQUESTDESC>" +
+                    "<REQUESTDATA>" +
+                    "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">" +
+                    "<VOUCHER VCHTYPE=\"Receipt Note\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">" +
+
+                    "<DATE>{grnDate}</DATE>" +
+                    "<VCHSTATUSDATE>{grnDate}</VCHSTATUSDATE>" +
+                    "<EFFECTIVEDATE>{grnDate}</EFFECTIVEDATE>" +
+
+                    "<VOUCHERTYPENAME>Receipt Note</VOUCHERTYPENAME>" +
+                    "<VOUCHERNUMBER>{grnNumber}</VOUCHERNUMBER>" +
+
+                    "<PARTYNAME>{supplierLedgerName}</PARTYNAME>" +
+                    "<PARTYLEDGERNAME>{supplierLedgerName}</PARTYLEDGERNAME>" +
+                    "<BASICBUYERNAME>{companyName}</BASICBUYERNAME>" +
+                    "<BASICBASEPARTYNAME>{supplierLedgerName}</BASICBASEPARTYNAME>" +
+
+                    "<REFERENCE>{purchaseOrderNumber}</REFERENCE>" +
+                    "<PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>" +
+                    "<VCHSTATUSVOUCHERTYPE>Receipt Note</VCHSTATUSVOUCHERTYPE>" +
+                    "<NUMBERINGSTYLE>Auto Retain</NUMBERINGSTYLE>" +
+                    "<ISINVOICE>No</ISINVOICE>" +
+
+                    "{inventoryEntries}" +
+
+                    "<NARRATION>{narration}</NARRATION>" +
+
+                    "</VOUCHER>" +
+                    "</TALLYMESSAGE>" +
+                    "</REQUESTDATA>" +
+                    "</IMPORTDATA>" +
+                    "</BODY>" +
+                    "</ENVELOPE>";
+
+}
