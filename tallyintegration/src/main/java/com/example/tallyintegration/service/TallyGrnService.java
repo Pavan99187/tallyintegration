@@ -61,23 +61,23 @@ public class TallyGrnService {
 
         for (SalesInvoiceItemDto item : items) {
 
-            BigDecimal amount = BigDecimal.valueOf(item.getRate())
-                    .multiply(BigDecimal.valueOf(item.getQuantity()));
-
-            xml.append(
-                    "<ALLINVENTORYENTRIES.LIST>" +
-                            "<STOCKITEMNAME>" + escapeXml(item.getItemName()) + "</STOCKITEMNAME>" +
-                            "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" +
-                            "<RATE>" + item.getRate() + "/Nos</RATE>" +
-                            "<ACTUALQTY>" + item.getQuantity() + " Nos</ACTUALQTY>" +
-                            "<BILLEDQTY>" + item.getQuantity() + " Nos</BILLEDQTY>" +
-                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
-                            "<ACCOUNTINGALLOCATIONS.LIST> " +
-                            "<LEDGERNAME>" + escapeXml(dto.getPurchaseLedger()) + "</LEDGERNAME>" +
-                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
-                            "</ACCOUNTINGALLOCATIONS.LIST>" +
-                            "</ALLINVENTORYENTRIES.LIST>"
-            );
+//            BigDecimal amount = BigDecimal.valueOf(item.getRate())
+//                    .multiply(BigDecimal.valueOf(item.getQuantity()));
+//
+//            xml.append(
+//                    "<ALLINVENTORYENTRIES.LIST>" +
+//                            "<STOCKITEMNAME>" + escapeXml(item.getItemName()) + "</STOCKITEMNAME>" +
+//                            "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" +
+//                            "<RATE>" + item.getRate() + "/Nos</RATE>" +
+//                            "<ACTUALQTY>" + item.getQuantity() + " Nos</ACTUALQTY>" +
+//                            "<BILLEDQTY>" + item.getQuantity() + " Nos</BILLEDQTY>" +
+//                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
+//                            "<ACCOUNTINGALLOCATIONS.LIST> " +
+//                            "<LEDGERNAME>" + escapeXml(dto.getPurchaseLedger()) + "</LEDGERNAME>" +
+//                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
+//                            "</ACCOUNTINGALLOCATIONS.LIST>" +
+//                            "</ALLINVENTORYENTRIES.LIST>"
+//            );
         }
 
         return xml.toString();

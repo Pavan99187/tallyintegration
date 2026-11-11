@@ -86,11 +86,16 @@ public class TallyXmlConstants {
                     "            <VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>\n" +
                     "            <VOUCHERNUMBER>{invoiceNumber}</VOUCHERNUMBER>\n" +
                     "            <PARTYLEDGERNAME>{customerLedger}</PARTYLEDGERNAME>\n" +
+                    "            <PARTYNAME>{customerLedger}</PARTYNAME>\n" +
+                    "            <BASICBUYERNAME>{customerLedger}</BASICBUYERNAME>\n" +
+                    "            <STATENAME>{placeOfSupply}</STATENAME>\n" +
+                    "            <COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\n" +
+                    "            <PLACEOFSUPPLY>{placeOfSupply}</PLACEOFSUPPLY>\n" +
+                    "            {partyGstTags}\n" +
                     "            <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>\n" +
                     "            <VCHENTRYMODE>Item Invoice</VCHENTRYMODE>\n" +
                     "            <ISINVOICE>Yes</ISINVOICE>\n" +
                     "            {inventoryEntries}\n" +
-                    "            {taxEntries}\n" +
                     "            <LEDGERENTRIES.LIST>\n" +
                     "              <LEDGERNAME>{customerLedger}</LEDGERNAME>\n" +
                     "              <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n" +
@@ -102,6 +107,7 @@ public class TallyXmlConstants {
                     "                <AMOUNT>-{totalAmount}</AMOUNT>\n" +
                     "              </BILLALLOCATIONS.LIST>\n" +
                     "            </LEDGERENTRIES.LIST>\n" +
+                    "            {taxEntries}\n" +
                     "          </VOUCHER>\n" +
                     "        </TALLYMESSAGE>\n" +
                     "      </REQUESTDATA>\n" +
@@ -110,6 +116,8 @@ public class TallyXmlConstants {
                     "</ENVELOPE>";
 
 
+
+    // Replace TALLY_PURCHASE_INVOICE inside TallyXmlConstants with this constant.
 
     public static final String TALLY_PURCHASE_INVOICE =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -129,29 +137,40 @@ public class TallyXmlConstants {
                     "        <TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
                     "          <VOUCHER VCHTYPE=\"Purchase\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">\n" +
                     "            <DATE>{invoiceDate}</DATE>\n" +
+                    "            <REFERENCEDATE>{invoiceDate}</REFERENCEDATE>\n" +
                     "            <EFFECTIVEDATE>{invoiceDate}</EFFECTIVEDATE>\n" +
                     "            <VOUCHERTYPENAME>Purchase</VOUCHERTYPENAME>\n" +
                     "            <VOUCHERNUMBER>{invoiceNumber}</VOUCHERNUMBER>\n" +
+                    "           <REFERENCE>{invoiceNumber}</REFERENCE>\n" +
+                    "            {referenceTags}\n" +
                     "            <PARTYLEDGERNAME>{supplierLedger}</PARTYLEDGERNAME>\n" +
-                    "            <STATENAME>{companyState}</STATENAME>\n" +
+                    "            <PARTYNAME>{supplierLedger}</PARTYNAME>\n" +
+                    "            <BASICBASEPARTYNAME>{supplierLedger}</BASICBASEPARTYNAME>\n" +
+                    "            <BASICBUYERNAME>{companyName}</BASICBUYERNAME>\n" +
+                    "            <CONSIGNEEMAILINGNAME>{companyName}</CONSIGNEEMAILINGNAME>\n" +
+                    "            <CONSIGNEESTATENAME>{placeOfSupply}</CONSIGNEESTATENAME>\n" +
+                    "            <CONSIGNEECOUNTRYNAME>India</CONSIGNEECOUNTRYNAME>\n" +
+                    "            <COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\n" +
+                    "            {supplierStateTags}\n" +
                     "            <PLACEOFSUPPLY>{placeOfSupply}</PLACEOFSUPPLY>\n" +
-                    "            <CMPGSTSTATE>{companyState}</CMPGSTSTATE>\n" +
+                    "            {companyStateTags}\n" +
+                    "            {partyGstTags}\n" +
                     "            <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>\n" +
                     "            <VCHENTRYMODE>Item Invoice</VCHENTRYMODE>\n" +
                     "            <ISINVOICE>Yes</ISINVOICE>\n" +
                     "            {inventoryEntries}\n" +
-                    "            {taxEntries}\n" +
                     "            <LEDGERENTRIES.LIST>\n" +
                     "              <LEDGERNAME>{supplierLedger}</LEDGERNAME>\n" +
                     "              <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n" +
                     "              <ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n" +
                     "              <AMOUNT>{totalAmount}</AMOUNT>\n" +
                     "              <BILLALLOCATIONS.LIST>\n" +
-                    "                <NAME>{invoiceNumber}</NAME>\n" +
+                    "                <NAME>{billRef}</NAME>\n" +
                     "                <BILLTYPE>New Ref</BILLTYPE>\n" +
                     "                <AMOUNT>{totalAmount}</AMOUNT>\n" +
                     "              </BILLALLOCATIONS.LIST>\n" +
                     "            </LEDGERENTRIES.LIST>\n" +
+                    "            {taxEntries}\n" +
                     "          </VOUCHER>\n" +
                     "        </TALLYMESSAGE>\n" +
                     "      </REQUESTDATA>\n" +
