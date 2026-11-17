@@ -1,7 +1,9 @@
+
 package com.example.tallyintegration.service;
 
 import com.example.tallyintegration.dto.LedgerDto;
 import com.example.tallyintegration.xmlconstants.TallyXmlConstants;
+
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -11,7 +13,7 @@ import java.util.Objects;
 @Service
 public class TallyLedgerService {
 
-    String url = "http://localhost:9000";
+    private final String url = "http://localhost:9000";
 
     private final RestClient restClient;
 
@@ -24,34 +26,57 @@ public class TallyLedgerService {
             String ledgerType,
             Logger logger) {
 
-        String ledgerParent;
+        String defaultParent;
 
         if ("CUSTOMER".equalsIgnoreCase(ledgerType)) {
-            ledgerParent = "Sundry Debtors";
+            defaultParent = "Sundry Debtors";
         } else {
-            ledgerParent = "Sundry Creditors";
+            defaultParent = "Sundry Creditors";
         }
 
+        // Use the supplied Tally ledger group, or the default.
+        String ledgerParent = hasText(dto.getLedgerGroup())
+                ? dto.getLedgerGroup()
+                : defaultParent;
+
+        // Convert credit days into Tally credit-period format.
+        String creditPeriod = dto.getCreditDays() == null
+                ? ""
+                : dto.getCreditDays() + " Days";
+
         String xml = TallyXmlConstants.TALLY_LEDGER_CREATION
-                .replace("{companyName}", dto.getCompanyName())
-                .replace("{ledgerName}", dto.getLedgerName())
-                .replace("{address1}", Objects.toString(dto.getAddress1(), ""))
-                .replace("{address2}", Objects.toString(dto.getAddress2(), ""))
-                .replace("{address3}", Objects.toString(dto.getAddress3(), ""))
-                .replace("{address4}", Objects.toString(dto.getAddress4(), ""))
-                .replace("{applicableFrom}", Objects.toString(dto.getApplicableFrom(),""))
-                .replace("{creditPeriod}", Objects.toString(dto.getCreditPeriod(),""))
-                .replace("{openingBalance}", Objects.toString(dto.getOpeningBalance(),""))
-                .replace("{country}", dto.getCountry())
-                .replace("{state}", dto.getState())
-                .replace("{pincode}", Objects.toString(dto.getPincode(), ""))
-                .replace("{phoneNumber}", Objects.toString(dto.getPhoneNumber(), ""))
-                .replace("{email}", Objects.toString(dto.getEmail(), ""))
-                .replace("{ledgerStateName}", dto.getLedgerStateName())
-                .replace("{gstRegistrationType}", Objects.toString(dto.getGstRegistrationType(), ""))
-                .replace("{gstin}", Objects.toString(dto.getGstin(), ""))
-                .replace("{panNumber}", Objects.toString(dto.getPanNumber(), ""))
-                .replace("{ledgerParent}", ledgerParent);
+                .replace("{companyName}", escapeXml(dto.getCompany()))
+                .replace("{ledgerName}", escapeXml(dto.getName()))
+
+                .replace("{address1}", escapeXml(dto.getAddressLine1()))
+                .replace("{address2}", escapeXml(dto.getAddressLine2()))
+                .replace("{address3}", "")
+                .replace("{address4}", escapeXml(dto.getCity()))
+
+                .replace("{applicableFrom}", escapeXml(dto.getApplicableFrom()))
+                .replace("{creditPeriod}", escapeXml(creditPeriod))
+                .replace("{openingBalance}",
+                        Objects.toString(dto.getOpeningBalance(), "0"))
+
+                .replace("{country}", escapeXml(dto.getCountry()))
+                .replace("{state}", escapeXml(dto.getState()))
+                .replace("{pincode}", escapeXml(dto.getPincode()))
+
+                .replace("{phoneNumber}", escapeXml(dto.getMobileNo()))
+                .replace("{email}", escapeXml(dto.getEmailId()))
+
+                .replace("{ledgerStateName}", escapeXml(dto.getState()))
+                .replace("{gstRegistrationType}",
+                        escapeXml(dto.getGstRegistrationType()))
+                .replace("{gstin}", escapeXml(dto.getGstin()))
+                .replace("{panNumber}", escapeXml(dto.getPan()))
+
+                .replace("{ledgerParent}", escapeXml(ledgerParent));
+
+        logger.info("Creating Tally ledger for customer: {}",
+                dto.getName());
+
+        logger.debug("Tally Ledger XML: {}", xml);
 
         return restClient.post()
                 .uri(url)
@@ -61,7 +86,20 @@ public class TallyLedgerService {
                 .body(String.class);
     }
 
+    private boolean hasText(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
 
+    private String escapeXml(String value) {
+        if (value == null) {
+            return "";
+        }
 
-
+        return value
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&apos;");
+    }
 }

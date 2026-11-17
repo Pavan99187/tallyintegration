@@ -263,4 +263,53 @@ public class TallyXmlConstants {
                     "</BODY>" +
                     "</ENVELOPE>";
 
+
+
+    public static final String TALLY_REJECTIONS_OUT =
+            "<ENVELOPE>" +
+                    "<HEADER>" +
+                    "<TALLYREQUEST>Import Data</TALLYREQUEST>" +
+                    "</HEADER>" +
+                    "<BODY>" +
+                    "<IMPORTDATA>" +
+                    "<REQUESTDESC>" +
+                    "<REPORTNAME>Vouchers</REPORTNAME>" +
+                    "<STATICVARIABLES>" +
+                    "<SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>" +
+                    "</STATICVARIABLES>" +
+                    "</REQUESTDESC>" +
+                    "<REQUESTDATA>" +
+                    "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">" +
+
+                    "<VOUCHER VCHTYPE=\"Rejections Out\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">" +
+
+                    "<DATE>{returnDate}</DATE>" +
+                    "<VCHSTATUSDATE>{returnDate}</VCHSTATUSDATE>" +
+                    "<EFFECTIVEDATE>{returnDate}</EFFECTIVEDATE>" +
+
+                    "<VOUCHERTYPENAME>Rejections Out</VOUCHERTYPENAME>" +
+                    "<PARTYNAME>{supplierLedgerName}</PARTYNAME>" +
+                    "<PARTYLEDGERNAME>{supplierLedgerName}</PARTYLEDGERNAME>" +
+
+                    "<VOUCHERNUMBER>{returnNumber}</VOUCHERNUMBER>" +
+                    "<NUMBERINGSTYLE>Auto Retain</NUMBERINGSTYLE>" +
+
+                    "<PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>" +
+                    "<VCHSTATUSVOUCHERTYPE>Rejections Out</VCHSTATUSVOUCHERTYPE>" +
+
+                    "<USETRACKINGNUMBER>No</USETRACKINGNUMBER>" +
+                    "<ISINVOICE>No</ISINVOICE>" +
+
+                    "{inventoryEntries}" +
+
+                    "<NARRATION>{narration}</NARRATION>" +
+
+                    "</VOUCHER>" +
+                    "</TALLYMESSAGE>" +
+                    "</REQUESTDATA>" +
+                    "</IMPORTDATA>" +
+                    "</BODY>" +
+                    "</ENVELOPE>";
+
+
 }

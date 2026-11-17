@@ -1,5 +1,6 @@
 package com.example.tallyintegration.service;
 
+import com.example.tallyintegration.dto.GrnItemDto;
 import com.example.tallyintegration.dto.TallyGrnDto;
 import com.example.tallyintegration.dto.SalesInvoiceItemDto;
 import com.example.tallyintegration.xmlconstants.TallyXmlConstants;
@@ -52,36 +53,62 @@ public class TallyGrnService {
         return response;
     }
 
+
     private String buildGrnInventoryEntries(TallyGrnDto dto) {
 
         StringBuilder xml = new StringBuilder();
 
-        List<SalesInvoiceItemDto> items =
-                dto.getSalesInvoiceItemDtoList();
+        List<GrnItemDto> items = dto.getGrnItemDtoList();
 
-        for (SalesInvoiceItemDto item : items) {
+        for (GrnItemDto item : items) {
 
-//            BigDecimal amount = BigDecimal.valueOf(item.getRate())
-//                    .multiply(BigDecimal.valueOf(item.getQuantity()));
-//
-//            xml.append(
-//                    "<ALLINVENTORYENTRIES.LIST>" +
-//                            "<STOCKITEMNAME>" + escapeXml(item.getItemName()) + "</STOCKITEMNAME>" +
-//                            "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" +
-//                            "<RATE>" + item.getRate() + "/Nos</RATE>" +
-//                            "<ACTUALQTY>" + item.getQuantity() + " Nos</ACTUALQTY>" +
-//                            "<BILLEDQTY>" + item.getQuantity() + " Nos</BILLEDQTY>" +
-//                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
-//                            "<ACCOUNTINGALLOCATIONS.LIST> " +
-//                            "<LEDGERNAME>" + escapeXml(dto.getPurchaseLedger()) + "</LEDGERNAME>" +
-//                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
-//                            "</ACCOUNTINGALLOCATIONS.LIST>" +
-//                            "</ALLINVENTORYENTRIES.LIST>"
-//            );
+            BigDecimal quantity = item.getQuantity();
+            BigDecimal accepted = item.getAcceptedQuantity();
+            BigDecimal rejected = item.getRejectedQuantity();
+
+            // Validate quantities
+            if (quantity == null || accepted == null || rejected == null) {
+                throw new IllegalArgumentException(
+                        "Quantity, acceptedQuantity and rejectedQuantity are required");
+            }
+
+            if (accepted.add(rejected).compareTo(quantity) != 0) {
+                throw new IllegalArgumentException(
+                        "Received quantity must equal accepted + rejected quantity for "
+                                + item.getItemName());
+            }
+
+            if (accepted.compareTo(BigDecimal.ZERO) < 0 ||
+                    rejected.compareTo(BigDecimal.ZERO) < 0) {
+                throw new IllegalArgumentException("Quantities cannot be negative");
+            }
+
+            // Only accepted goods enter usable stock
+            if (accepted.compareTo(BigDecimal.ZERO) == 0) {
+                continue;
+            }
+
+            BigDecimal amount = item.getRate().multiply(accepted);
+
+            xml.append(
+                    "<ALLINVENTORYENTRIES.LIST>" +
+                            "<STOCKITEMNAME>" + escapeXml(item.getItemName()) + "</STOCKITEMNAME>" +
+                            "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" +
+                            "<RATE>" + item.getRate() + "/Nos</RATE>" +
+                            "<ACTUALQTY>" + accepted + " Nos</ACTUALQTY>" +
+                            "<BILLEDQTY>" + accepted + " Nos</BILLEDQTY>" +
+                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
+                            "<ACCOUNTINGALLOCATIONS.LIST>" +
+                            "<LEDGERNAME>" + escapeXml(dto.getPurchaseLedger()) + "</LEDGERNAME>" +
+                            "<AMOUNT>" + amount.toPlainString() + "</AMOUNT>" +
+                            "</ACCOUNTINGALLOCATIONS.LIST>" +
+                            "</ALLINVENTORYENTRIES.LIST>"
+            );
         }
 
         return xml.toString();
     }
+
 
     private String escapeXml(String value) {
 

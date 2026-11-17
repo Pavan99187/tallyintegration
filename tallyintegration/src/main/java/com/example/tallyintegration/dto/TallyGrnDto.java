@@ -11,7 +11,7 @@ public class TallyGrnDto {
     private String purchaseOrderNumber;
     private String purchaseLedger;
     private String narration;
-    private List<SalesInvoiceItemDto> salesInvoiceItemDtoList;
+    private List<GrnItemDto> grnItemDtoList;
 
     public String getCompanyName() {
         return companyName;
@@ -69,11 +69,11 @@ public class TallyGrnDto {
         this.narration = narration;
     }
 
-    public List<SalesInvoiceItemDto> getSalesInvoiceItemDtoList() {
-        return salesInvoiceItemDtoList;
+    public List<GrnItemDto> getGrnItemDtoList() {
+        return grnItemDtoList;
     }
 
-    public void setSalesInvoiceItemDtoList(List<SalesInvoiceItemDto> salesInvoiceItemDtoList) {
-        this.salesInvoiceItemDtoList = salesInvoiceItemDtoList;
+    public void setGrnItemDtoList(List<GrnItemDto> grnItemDtoList) {
+        this.grnItemDtoList = grnItemDtoList;
     }
 }

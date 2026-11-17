@@ -1,104 +1,123 @@
+
 package com.example.tallyintegration.dto;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 
 public class LedgerDto {
 
-  private String companyName;
-  private String ledgerName;
-  private String address1;
-  private String address2;
-  private String address3;
-  private String address4;
-  private String creditPeriod;
-  private String openingBalance;
-  private String country;
-  private String state;
-  private String pincode;
-  private String phoneNumber;
-  private String email;
-  private String ledgerStateName;
-  private String gstRegistrationType;
-  private String gstin;
-  private String panNumber;
-  private String applicableFrom;
+    @JsonProperty("company")
+    private String company;
 
-    public LedgerDto() {
+//    @JsonProperty("erpnext_customer_id")
+//    private String erpnextCustomerId;
+
+    @JsonProperty("name")
+    @JsonAlias({"customer_name", "supplier_name"})
+    private String name;
+
+    @JsonProperty("ledger_group")
+    private String ledgerGroup;
+
+    @JsonProperty("address_line1")
+    private String addressLine1;
+
+    @JsonProperty("address_line2")
+    private String addressLine2;
+
+    @JsonProperty("city")
+    private String city;
+
+    @JsonProperty("state")
+    private String state;
+
+    @JsonProperty("country")
+    private String country;
+
+    @JsonProperty("pincode")
+    private String pincode;
+
+    @JsonProperty("mobile_no")
+    private String mobileNo;
+
+    @JsonProperty("email_id")
+    private String emailId;
+
+    @JsonProperty("tax_id")
+    @JsonAlias({"gstin"})
+    private String gstin;
+
+    @JsonProperty("pan")
+    private String pan;
+
+    @JsonProperty("gst_registration_type")
+    @JsonAlias({"gst_category"})
+    private String gstRegistrationType;
+
+    @JsonProperty("applicable_from")
+    private String applicableFrom;
+
+    @JsonProperty("opening_balance")
+    private BigDecimal openingBalance;
+
+    @JsonProperty("credit_days")
+    private Integer creditDays;
+
+    public String getCompany() {
+        return company;
     }
 
-    public LedgerDto(String companyName, String ledgerName, String address1, String address2, String address3, String address4, String creditPeriod, String openingBalance, String country, String state, String pincode, String phoneNumber, String email, String ledgerStateName, String gstRegistrationType, String gstin, String panNumber, String applicableFrom) {
-        this.companyName = companyName;
-        this.ledgerName = ledgerName;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.address3 = address3;
-        this.address4 = address4;
-        this.creditPeriod = creditPeriod;
-        this.openingBalance = openingBalance;
-        this.country = country;
-        this.state = state;
-        this.pincode = pincode;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.ledgerStateName = ledgerStateName;
-        this.gstRegistrationType = gstRegistrationType;
-        this.gstin = gstin;
-        this.panNumber = panNumber;
-        this.applicableFrom = applicableFrom;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    //    public String getErpnextCustomerId() {
+    //        return erpnextCustomerId;
+    //    }
+
+    //    public void setErpnextCustomerId(String erpnextCustomerId) {
+    //        this.erpnextCustomerId = erpnextCustomerId;
+//    }
+
+    public String getName() {
+        return name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLedgerName() {
-        return ledgerName;
+    public String getLedgerGroup() {
+        return ledgerGroup;
     }
 
-    public void setLedgerName(String ledgerName) {
-        this.ledgerName = ledgerName;
+    public void setLedgerGroup(String ledgerGroup) {
+        this.ledgerGroup = ledgerGroup;
     }
 
-    public String getAddress1() {
-        return address1;
+    public String getAddressLine1() {
+        return addressLine1;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
 
-    public String getAddress2() {
-        return address2;
+    public String getAddressLine2() {
+        return addressLine2;
     }
 
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
     }
 
-    public String getAddress3() {
-        return address3;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress3(String address3) {
-        this.address3 = address3;
-    }
-
-    public String getAddress4() {
-        return address4;
-    }
-
-    public void setAddress4(String address4) {
-        this.address4 = address4;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getState() {
@@ -109,6 +128,14 @@ public class LedgerDto {
         this.state = state;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public String getPincode() {
         return pincode;
     }
@@ -117,20 +144,20 @@ public class LedgerDto {
         this.pincode = pincode;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getMobileNo() {
+        return mobileNo;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     public String getGstin() {
@@ -141,12 +168,12 @@ public class LedgerDto {
         this.gstin = gstin;
     }
 
-    public String getPanNumber() {
-        return panNumber;
+    public String getPan() {
+        return pan;
     }
 
-    public void setPanNumber(String panNumber) {
-        this.panNumber = panNumber;
+    public void setPan(String pan) {
+        this.pan = pan;
     }
 
     public String getGstRegistrationType() {
@@ -157,14 +184,6 @@ public class LedgerDto {
         this.gstRegistrationType = gstRegistrationType;
     }
 
-    public String getLedgerStateName() {
-        return ledgerStateName;
-    }
-
-    public void setLedgerStateName(String ledgerStateName) {
-        this.ledgerStateName = ledgerStateName;
-    }
-
     public String getApplicableFrom() {
         return applicableFrom;
     }
@@ -173,21 +192,19 @@ public class LedgerDto {
         this.applicableFrom = applicableFrom;
     }
 
-    public String getCreditPeriod() {
-        return creditPeriod;
-    }
-
-    public void setCreditPeriod(String creditPeriod) {
-        this.creditPeriod = creditPeriod;
-    }
-
-    public String getOpeningBalance() {
+    public BigDecimal getOpeningBalance() {
         return openingBalance;
     }
 
-    public void setOpeningBalance(String openingBalance) {
+    public void setOpeningBalance(BigDecimal openingBalance) {
         this.openingBalance = openingBalance;
     }
 
+    public Integer getCreditDays() {
+        return creditDays;
+    }
 
+    public void setCreditDays(Integer creditDays) {
+        this.creditDays = creditDays;
+    }
 }

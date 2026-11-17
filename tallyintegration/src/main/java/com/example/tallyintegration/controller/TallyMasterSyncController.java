@@ -1,14 +1,8 @@
 package com.example.tallyintegration.controller;
 
 
-import com.example.tallyintegration.dto.LedgerDto;
-import com.example.tallyintegration.dto.PurchaseInvoiceDto;
-import com.example.tallyintegration.dto.SalesInvoiceDto;
-import com.example.tallyintegration.dto.TallyGrnDto;
-import com.example.tallyintegration.service.TallyGrnService;
-import com.example.tallyintegration.service.TallyLedgerService;
-import com.example.tallyintegration.service.TallyPurchaseInvoiceService;
-import com.example.tallyintegration.service.TallySalesInvoiceService;
+import com.example.tallyintegration.dto.*;
+import com.example.tallyintegration.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +19,14 @@ public class TallyMasterSyncController {
     private final TallyLedgerService tallyLedgerService;
     private final TallySalesInvoiceService tallySalesInvoiceService;
     private final TallyPurchaseInvoiceService tallyPurchaseInvoiceService;
+    private final TallyRejectionsOutService tallyRejectionsOutService;
     private final TallyGrnService tallyGrnService;
 
-    public TallyMasterSyncController(TallyLedgerService tallyLedgerService, TallySalesInvoiceService tallySalesInvoiceService, TallyPurchaseInvoiceService tallyPurchaseInvoiceService, TallyGrnService tallyGrnService) {
+    public TallyMasterSyncController(TallyLedgerService tallyLedgerService, TallySalesInvoiceService tallySalesInvoiceService, TallyPurchaseInvoiceService tallyPurchaseInvoiceService, TallyRejectionsOutService tallyRejectionsOutService, TallyRejectionsOutService tallyRejectionsOutService1, TallyGrnService tallyGrnService) {
         this.tallyLedgerService = tallyLedgerService;
         this.tallySalesInvoiceService = tallySalesInvoiceService;
         this.tallyPurchaseInvoiceService = tallyPurchaseInvoiceService;
+        this.tallyRejectionsOutService = tallyRejectionsOutService1;
         this.tallyGrnService = tallyGrnService;
     }
 
@@ -81,6 +77,15 @@ public class TallyMasterSyncController {
         logger.info("========== Starting GRN Creation =======");
         String response = tallyGrnService.createGrn(grnDto, logger);
         logger.info("========== GRN Creation Completed =======");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/createRejectionsOut")
+    public ResponseEntity<String> createRejectionsOut(@RequestBody TallyRejectionsOutDto rejectionsOutDto) {
+        Logger logger = LoggerFactory.getLogger("RejectionsOutCreation");
+        logger.info("========== Starting Rejections Out Creation =======");
+        String response = tallyRejectionsOutService.createRejectionsOut(rejectionsOutDto, logger);
+        logger.info("========== Rejections Out Creation Completed =======");
         return ResponseEntity.ok(response);
     }
 
