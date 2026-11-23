@@ -10,8 +10,8 @@ public class LedgerDto {
     @JsonProperty("company")
     private String company;
 
-//    @JsonProperty("erpnext_customer_id")
-//    private String erpnextCustomerId;
+    @JsonProperty("unique_id")
+    private String uniqueId;
 
     @JsonProperty("name")
     @JsonAlias({"customer_name", "supplier_name"})
@@ -19,24 +19,6 @@ public class LedgerDto {
 
     @JsonProperty("ledger_group")
     private String ledgerGroup;
-
-    @JsonProperty("address_line1")
-    private String addressLine1;
-
-    @JsonProperty("address_line2")
-    private String addressLine2;
-
-    @JsonProperty("city")
-    private String city;
-
-    @JsonProperty("state")
-    private String state;
-
-    @JsonProperty("country")
-    private String country;
-
-    @JsonProperty("pincode")
-    private String pincode;
 
     @JsonProperty("mobile_no")
     private String mobileNo;
@@ -64,6 +46,17 @@ public class LedgerDto {
     @JsonProperty("credit_days")
     private Integer creditDays;
 
+    @JsonProperty("address")
+    private AddressDto addressDto;
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
     public String getCompany() {
         return company;
     }
@@ -71,14 +64,6 @@ public class LedgerDto {
     public void setCompany(String company) {
         this.company = company;
     }
-
-    //    public String getErpnextCustomerId() {
-    //        return erpnextCustomerId;
-    //    }
-
-    //    public void setErpnextCustomerId(String erpnextCustomerId) {
-    //        this.erpnextCustomerId = erpnextCustomerId;
-//    }
 
     public String getName() {
         return name;
@@ -96,53 +81,6 @@ public class LedgerDto {
         this.ledgerGroup = ledgerGroup;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
-    }
-
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
-    }
-
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
-    }
 
     public String getMobileNo() {
         return mobileNo;
@@ -206,5 +144,13 @@ public class LedgerDto {
 
     public void setCreditDays(Integer creditDays) {
         this.creditDays = creditDays;
+    }
+
+    public AddressDto getAddressDto() {
+        return addressDto;
+    }
+
+    public void setAddressDto(AddressDto addressDto) {
+        this.addressDto = addressDto;
     }
 }

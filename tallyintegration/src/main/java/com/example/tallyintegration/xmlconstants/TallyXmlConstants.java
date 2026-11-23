@@ -55,6 +55,13 @@ public class TallyXmlConstants {
                     "            <INCOMETAXNUMBER>{panNumber}</INCOMETAXNUMBER>\n" +
                     "            <GSTREGISTRATIONTYPE>{gstRegistrationType}</GSTREGISTRATIONTYPE>\n" +
                     "            <PARTYGSTIN>{gstin}</PARTYGSTIN>\n" +
+                    "             <LANGUAGENAME.LIST>\n" +
+                    "            <NAME.LIST TYPE=\"String\">\n" +
+                    "            <NAME>{ledgerName}</NAME>\n" +
+                    "            <NAME>{uniqueId}</NAME> <!-- This is your Alias -->\n" +
+                    "             </NAME.LIST>\n" +
+                    "    <LANGUAGEID>1033</LANGUAGEID>\n" +
+                    "</LANGUAGENAME.LIST>\n" +
                     "          </LEDGER>\n" +
                     "        </TALLYMESSAGE>\n" +
                     "      </REQUESTDATA>\n" +
