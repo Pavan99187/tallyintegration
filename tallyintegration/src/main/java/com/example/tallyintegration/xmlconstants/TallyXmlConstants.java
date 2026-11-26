@@ -319,4 +319,75 @@ public class TallyXmlConstants {
                     "</ENVELOPE>";
 
 
+
+    public static final String TALLY_PURCHASE_ORDER = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <ENVELOPE>
+              <HEADER>
+                <TALLYREQUEST>Import Data</TALLYREQUEST>
+              </HEADER>
+              <BODY>
+                <IMPORTDATA>
+                  <REQUESTDESC>
+                    <REPORTNAME>Vouchers</REPORTNAME>
+                    <STATICVARIABLES>
+                      <SVCURRENTCOMPANY>{companyName}</SVCURRENTCOMPANY>
+                    </STATICVARIABLES>
+                  </REQUESTDESC>
+                  <REQUESTDATA>
+                    <TALLYMESSAGE xmlns:UDF="TallyUDF">
+                      <VOUCHER REMOTEID="{orderNumber}" VCHTYPE="{voucherType}" ACTION="Create" OBJVIEW="Invoice Voucher View">
+                        <DATE>{orderDate}</DATE>
+                        <EFFECTIVEDATE>{orderDate}</EFFECTIVEDATE>
+                        <VOUCHERTYPENAME>{voucherType}</VOUCHERTYPENAME>
+                        <VOUCHERNUMBER>{orderNumber}</VOUCHERNUMBER>
+                        <REFERENCE>{orderNumber}</REFERENCE>
+                        <PARTYLEDGERNAME>{supplierLedger}</PARTYLEDGERNAME>
+                        <PARTYNAME>{supplierLedger}</PARTYNAME>
+                        <BASICBUYERNAME>{companyName}</BASICBUYERNAME>
+                        <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>
+                        <ISINVOICE>No</ISINVOICE>
+                        {inventoryEntries}
+                        <LEDGERENTRIES.LIST>
+                          <LEDGERNAME>{supplierLedger}</LEDGERNAME>
+                          <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                          <ISPARTYLEDGER>Yes</ISPARTYLEDGER>
+                          <AMOUNT>{totalAmount}</AMOUNT>
+                        </LEDGERENTRIES.LIST>
+                      </VOUCHER>
+                    </TALLYMESSAGE>
+                  </REQUESTDATA>
+                </IMPORTDATA>
+              </BODY>
+            </ENVELOPE>
+            """;
+
+    /** One block per PO line; repeated and joined into {inventoryEntries}. */
+    public static final String TALLY_PURCHASE_ORDER_ITEM = """
+            <ALLINVENTORYENTRIES.LIST>
+              <STOCKITEMNAME>{itemName}</STOCKITEMNAME>
+              <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+              <RATE>{rate}/{uom}</RATE>
+              <AMOUNT>{amount}</AMOUNT>
+              <ACTUALQTY> {qty} {uom}</ACTUALQTY>
+              <BILLEDQTY> {qty} {uom}</BILLEDQTY>
+              <BATCHALLOCATIONS.LIST>
+                <GODOWNNAME>{godown}</GODOWNNAME>
+                <BATCHNAME>{batchName}</BATCHNAME>
+                <ORDERNO>{orderNumber}</ORDERNO>
+                <AMOUNT>{amount}</AMOUNT>
+                <ACTUALQTY> {qty} {uom}</ACTUALQTY>
+                <BILLEDQTY> {qty} {uom}</BILLEDQTY>
+                <ORDERDUEDATE JD="{dueDateJd}" P="{dueDate}">{dueDate}</ORDERDUEDATE>
+              </BATCHALLOCATIONS.LIST>
+              <ACCOUNTINGALLOCATIONS.LIST>
+                <LEDGERNAME>{purchaseLedger}</LEDGERNAME>
+                <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                <AMOUNT>{amount}</AMOUNT>
+              </ACCOUNTINGALLOCATIONS.LIST>
+            </ALLINVENTORYENTRIES.LIST>
+            """;
+
+
+
 }

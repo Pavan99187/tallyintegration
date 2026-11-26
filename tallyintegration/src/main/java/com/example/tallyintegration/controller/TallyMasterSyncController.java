@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/tally")
 public class TallyMasterSyncController {
@@ -21,13 +23,17 @@ public class TallyMasterSyncController {
     private final TallyPurchaseInvoiceService tallyPurchaseInvoiceService;
     private final TallyRejectionsOutService tallyRejectionsOutService;
     private final TallyGrnService tallyGrnService;
+    private final TallyPurchaseOrderService tallyPurchaseOrderService;
+    private final TallyMasterExistenceService tallyMasterExistenceService;
 
-    public TallyMasterSyncController(TallyLedgerService tallyLedgerService, TallySalesInvoiceService tallySalesInvoiceService, TallyPurchaseInvoiceService tallyPurchaseInvoiceService, TallyRejectionsOutService tallyRejectionsOutService, TallyRejectionsOutService tallyRejectionsOutService1, TallyGrnService tallyGrnService) {
+    public TallyMasterSyncController(TallyLedgerService tallyLedgerService, TallySalesInvoiceService tallySalesInvoiceService, TallyPurchaseInvoiceService tallyPurchaseInvoiceService, TallyRejectionsOutService tallyRejectionsOutService, TallyRejectionsOutService tallyRejectionsOutService1, TallyGrnService tallyGrnService, TallyPurchaseOrderService tallyPurchaseOrderService, TallyPurchaseOrderService tallyPurchaseOrderService1, TallyMasterExistenceService tallyMasterExistenceService) {
         this.tallyLedgerService = tallyLedgerService;
         this.tallySalesInvoiceService = tallySalesInvoiceService;
         this.tallyPurchaseInvoiceService = tallyPurchaseInvoiceService;
         this.tallyRejectionsOutService = tallyRejectionsOutService1;
         this.tallyGrnService = tallyGrnService;
+        this.tallyPurchaseOrderService = tallyPurchaseOrderService1;
+        this.tallyMasterExistenceService = tallyMasterExistenceService;
     }
 
     // Add your endpoints here for Tally master synchronization
@@ -90,4 +96,42 @@ public class TallyMasterSyncController {
     }
 
 
+    @PostMapping("/createPurchaseOrder")
+    public ResponseEntity<String> createPurchaseOrder(@RequestBody PurchaseOrderDto purchaseOrderDto) {
+        Logger logger = LoggerFactory.getLogger("PurchaseOrderCreation");
+        logger.info("========== Starting Purchase Order Creation =======");
+        String response = tallyPurchaseOrderService.createPurchaseOrder(purchaseOrderDto, logger);
+        logger.info("========== Purchase Order Creation Completed =======");
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping("/unitExists")
+    public ResponseEntity<String> unitExists(@RequestBody Map<String, String> unitName) {
+        System.out.println("Received unit name: " + unitName.get("name"));
+        boolean exists = tallyMasterExistenceService.unitExists(unitName.get("name"));
+        return ResponseEntity.ok(Boolean.toString(exists));
+    }
+
+    @PostMapping("/stockGroupExists")
+    public ResponseEntity<String> stockGroupExists(@RequestBody Map<String, String> stockGroupName) {
+        System.out.println("Received stock group name: " + stockGroupName.get("name"));
+        boolean exists = tallyMasterExistenceService.stockGroupExists(stockGroupName.get("name"));
+        return ResponseEntity.ok(Boolean.toString(exists));
+    }
+
+
+    @PostMapping("/godownExists")
+    public ResponseEntity<String> godownExists(@RequestBody Map<String, String> godownName) {
+        System.out.println("Received godown name: " + godownName.get("name"));
+        boolean exists = tallyMasterExistenceService.godownExists(godownName.get("name"));
+        return ResponseEntity.ok(Boolean.toString(exists));
+    }
+
+    @PostMapping("/stockItemExists")
+    public ResponseEntity<String> stockItemExists(@RequestBody Map<String, String> stockItemName) {
+        System.out.println("Received stock item name: " + stockItemName.get("name"));
+        boolean exists = tallyMasterExistenceService.stockItemExists(stockItemName.get("name"));
+        return ResponseEntity.ok(Boolean.toString(exists));
+    }
 }
